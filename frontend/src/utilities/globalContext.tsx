@@ -1,4 +1,4 @@
-import {createContext , useState, FC, ReactNode, useEffect} from 'react'
+import {createContext , useContext, useState, FC, ReactNode, useEffect} from 'react'
 import {Entry, EntryContextType} from '../@types/context'
 import axios from 'axios'
 
@@ -43,3 +43,34 @@ export const EntryProvider: React.FC<{children : ReactNode}> = ({children}) => {
       )
 }
 
+export const DarkModeContext = createContext({
+  isDarkMode: false,
+  toggleDarkMode: () => {},
+});
+
+export const DarkModeProvider: React.FC<{children : ReactNode}> = ({ children }) => {
+  const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !('isDarkMode' in localStorage);
+  const savedIsDarkMode = localStorage.getItem('isDarkMode') === 'true';
+  const [isDarkMode, setIsDarkMode] = useState(savedIsDarkMode || prefersDarkMode);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('isDarkMode', String(isDarkMode));
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  return (
+    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      {children}
+    </DarkModeContext.Provider>
+  );
+};
+
+export const useDarkMode = () => useContext(DarkModeContext);
