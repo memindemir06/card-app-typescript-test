@@ -1,5 +1,5 @@
-import { server } from "../src/server"
 import Prisma from "../src/db";
+import { server } from "../src/server";
 
 describe("server test", () => {
   it("should assert 1 + 1 is 2", () => {
@@ -7,12 +7,12 @@ describe("server test", () => {
   });
 });
 
-describe('GET /get/', () => {
-  it('should return all entries', async () => {
+describe("GET /get/", () => {
+  it("should return all entries", async () => {
     // Arrange: Create a test entry
     const testEntry = {
-      title: 'Test Title',
-      description: 'Test Description',
+      title: "Test Title",
+      description: "Test Description",
       created_at: new Date(),
       scheduled_date: new Date(),
     };
@@ -20,8 +20,8 @@ describe('GET /get/', () => {
 
     // Act: Request all entries
     const response = await server.inject({
-      method: 'GET',
-      url: '/get/',
+      method: "GET",
+      url: "/get/",
     });
 
     const responseBody = JSON.parse(response.body);
@@ -41,14 +41,14 @@ describe('GET /get/', () => {
   });
 });
 
-describe('POST /create/', () => {
-  it('should create a new entry and return it', async () => {
+describe("POST /create/", () => {
+  it("should create a new entry and return it", async () => {
     const response = await server.inject({
-      method: 'POST',
-      url: '/create/',
+      method: "POST",
+      url: "/create/",
       payload: {
-        title: 'Test Title',
-        description: 'Test Description',
+        title: "Test Title",
+        description: "Test Description",
         created_at: new Date(),
         scheduled_date: new Date(),
       },
@@ -57,21 +57,21 @@ describe('POST /create/', () => {
     const responseBody = JSON.parse(response.body);
 
     expect(response.statusCode).toEqual(200);
-    expect(responseBody).toHaveProperty('id');
-    expect(responseBody.title).toEqual('Test Title');
-    expect(responseBody.description).toEqual('Test Description');
+    expect(responseBody).toHaveProperty("id");
+    expect(responseBody.title).toEqual("Test Title");
+    expect(responseBody.description).toEqual("Test Description");
 
     // Clean up: delete the test entry
     await Prisma.entry.delete({ where: { id: responseBody.id } });
   });
 });
 
-describe('GET /get/:id', () => {
-  it('should return the entry with the specified id', async () => {
+describe("GET /get/:id", () => {
+  it("should return the entry with the specified id", async () => {
     // Arrange: Create a test entry
     const testEntry = {
-      title: 'Test Title',
-      description: 'Test Description',
+      title: "Test Title",
+      description: "Test Description",
       created_at: new Date(),
       scheduled_date: new Date(),
     };
@@ -79,7 +79,7 @@ describe('GET /get/:id', () => {
 
     // Act: Request the entry with the specified id
     const response = await server.inject({
-      method: 'GET',
+      method: "GET",
       url: `/get/${createdEntry.id}`,
     });
 
