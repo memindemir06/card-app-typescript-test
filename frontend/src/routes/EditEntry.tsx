@@ -28,7 +28,7 @@ export default function EditEntry(){
             <input className="p-3 rounded-md" type="text" placeholder="Title" name="title" value={newEntry.title} onChange={handleInputChange}/>
             <textarea className="p-3 rounded-md" placeholder="Description" name="description" value={newEntry.description} onChange={handleInputChange}/>
             <input className="p-3 rounded-md" type="date" name="created_at" value={(new Date(newEntry.created_at)).toISOString().split('T')[0]} onChange={handleInputChange}/>
-            <button onClick={(e) => {handleSend(e)}} className="bg-blue-400 hover:bg-blue-600 font-semibold text-white p-3 rounded-md">Update</button>
+            <button onClick={(e) => {handleSend(e)}} className="bg-blue-400 hover:bg-blue-600 dark:bg-slate-700 dark:hover:bg-slate-800 font-semibold text-white p-3 rounded-md">Update</button>
         </section>
     )
 }

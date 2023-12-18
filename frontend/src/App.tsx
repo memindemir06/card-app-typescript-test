@@ -12,7 +12,7 @@ import {
 
 export default function App() {
   return (
-    <section>
+    <section className="bg-slate-50 dark:bg-slate-600 min-h-screen">
   <Router>
     <EntryProvider>
     <NavBar></NavBar>
